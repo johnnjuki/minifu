@@ -1,13 +1,10 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import { Header } from "@/components/header";
-import {
-  CalendarCheckIcon,
-  CalendarIcon,
-  Gift,
-  Home,
-  PartyPopper,
-  PlusIcon,
-  User,
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Gift, Home, User } from "lucide-react";
 import Link from "next/link";
 
 const NavItem = ({
@@ -29,6 +26,8 @@ const NavItem = ({
 );
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
   return (
     <div className="flex h-screen flex-col">
       <Header />
@@ -43,7 +42,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </main>
       {/* // TODO: when in selected nav, bold */}
-      <nav className=" flex items-center justify-between bg-white py-2 px-4">
+      <nav
+        className={
+          cn("flex items-center justify-between bg-white px-4 py-2",
+          pathname?.startsWith("/account/programs/") && "hidden")
+        }
+      >
         <NavItem href="/home" icon={Home} label="Home" />
         <NavItem href="/my-rewards" icon={Gift} label="My Rewards" />
         <NavItem href="/account" icon={User} label="Account" />

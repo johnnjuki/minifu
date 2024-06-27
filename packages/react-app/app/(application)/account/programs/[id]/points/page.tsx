@@ -1,19 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { WayToEarn, waysToEarn, columns } from "../../../../../columns";
-import { DataTable } from "@/components/ui/data-table";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
-import { Facebook, Instagram, Twitter, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import { WayToEarn, columns, waysToEarn } from "../../../../../columns";
 
 type Social = {
   icon: React.ReactElement;
@@ -62,8 +60,7 @@ export default async function Home() {
   const data = await getData();
 
   return (
-    <main className="p-2">
-      <div className="text-xl font-bold">Earn points</div>
+    <main className="">
       <p className="text-sm text-muted-foreground mt-1 mb-4">
         Create ways to earn when customers engage with your brand
       </p>

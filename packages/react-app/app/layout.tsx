@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
 
-import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
 import { BlockchainProviders } from "@/providers/blockchain-providers";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ThemeProvider } from "@/providers/theme-provider";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} max-w-screen-sm mx-auto`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} mx-auto max-w-screen-sm`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
