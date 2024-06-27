@@ -15,13 +15,13 @@ import {
 import { Facebook, Instagram, Twitter, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-export type Social = {
+type Social = {
   icon: React.ReactElement;
   description: string;
   href: string;
 };
 
-export const socials: Social[] = [
+ const socials: Social[] = [
   {
     icon: <Facebook />,
     description: "Like & follow on Facebook",
