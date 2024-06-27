@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { WayToEarn, waysToEarn, columns } from "./columns";
+import { WayToEarn, waysToEarn, columns } from "../../../../../columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Button } from "@/components/ui/button";
 import {
@@ -65,7 +65,7 @@ export default async function Home() {
     <main className="p-2">
       <div className="text-xl font-bold">Earn points</div>
       <p className="text-sm text-muted-foreground mt-1 mb-4">
-        Create ways to earn when users engage with your brand
+        Create ways to earn when customers engage with your brand
       </p>
 
       <Dialog>
