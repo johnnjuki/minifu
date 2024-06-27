@@ -25,7 +25,7 @@ export default function CreateProgramPage() {
     console.log(data); // TODO: Delete this
     try {
         const hash = await writeContractAsync({
-            address: "0x14C08F73c800D278321813F1AA56Fa2F2aeF700F",
+            address: "0x58467a99f2e6487764a290996cf938c4F47C34FA",
             abi: minifuAbi,
             functionName: "createProgram",
             args: [ data.name as string, data.description as string],

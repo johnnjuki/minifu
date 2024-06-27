@@ -3,48 +3,49 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 export type WayToEarn = {
-  way: string;
-  rewarded: string;
+  name: string;
+  url: string;
+  points: bigint;
+  totalCustomers: bigint;
 };
-
-export const waysToEarn: WayToEarn[] = [
-  {
-    way: "Placing an order",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Following on Twitter",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Following on Facebook",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Liking on Twitter",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Liking on Facebook",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Sharing on Twitter",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-  {
-    way: "Sharing on Facebook",
-    rewarded: Math.floor(Math.random() * 100) + 1,
-  },
-].map((way) => ({ ...way, rewarded: `${way.rewarded} rewarded` }));
+//   {
+//     way: "Placing an order",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Following on Twitter",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Following on Facebook",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Liking on Twitter",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Liking on Facebook",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Sharing on Twitter",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+//   {
+//     way: "Sharing on Facebook",
+//     rewarded: Math.floor(Math.random() * 100) + 1,
+//   },
+// ].map((way) => ({ ...way, rewarded: `${way.rewarded} rewarded` }));
 
 export const columns: ColumnDef<WayToEarn>[] = [
   {
-    accessorKey: "way",
+    accessorKey: "name",
     header: "Ways to earn",
   },
   {
-    accessorKey: "rewarded",
+    accessorKey: "totalCustomers",
     header: "Users rewarded",
   },
+  
 ];

@@ -24,7 +24,7 @@ export default function AccountPage() {
     isPending,
     error,
   } = useReadContract({
-    address: "0x14C08F73c800D278321813F1AA56Fa2F2aeF700F",
+    address: "0x58467a99f2e6487764a290996cf938c4F47C34FA",
     abi: minifuAbi,
     functionName: "getProgramsByOwner",
     args: [address!!],

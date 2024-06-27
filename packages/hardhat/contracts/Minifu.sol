@@ -6,8 +6,9 @@ contract Minifu {
     Task here, is represented as way to earn on the frontend
     */
 
-    // Represents a social media task with a URL, points, and total customers who have completed it.
+    // Represents a social media task with a name, URL, points, and total customers who have completed it.
     struct Task {
+        string name;
         string url;
         uint256 points;
         uint256 totalCustomers;
@@ -32,6 +33,7 @@ contract Minifu {
 
     // Struct for returning task details
     struct TaskInfo {
+        string name;
         string url;
         uint256 points;
         uint256 totalCustomers;
@@ -56,6 +58,7 @@ contract Minifu {
         address indexed owner,
         uint256 programId,
         uint256 taskId,
+        string name,
         string url,
         uint256 points
     );
@@ -90,6 +93,7 @@ contract Minifu {
     // Allows a user to add a task to a program
     function addTask(
         uint256 _programId,
+        string memory _name,
         string memory _url,
         uint256 _points
     ) public {
@@ -100,6 +104,7 @@ contract Minifu {
 
         uint256 taskId = program.tasksCount;
         program.tasks[taskId] = Task({
+            name: _name,
             url: _url,
             points: _points,
             totalCustomers: 0
@@ -107,7 +112,7 @@ contract Minifu {
 
         program.tasksCount++;
 
-        emit TaskAdded(msg.sender, _programId, taskId, _url, _points);
+        emit TaskAdded(msg.sender, _programId, taskId, _name, _url, _points);
     }
 
     function completeTask(
@@ -181,11 +186,11 @@ contract Minifu {
     )
         public
         view
-        returns (string memory url, uint256 points, uint256 totalCustomers)
+        returns (string memory name, string memory url, uint256 points, uint256 totalCustomers)
     {
         Program storage program = programs[_programOwner][_programId];
         Task storage task = program.tasks[_taskId];
-        return (task.url, task.points, task.totalCustomers);
+        return (task.name, task.url, task.points, task.totalCustomers);
     }
 
     // Returns the tasks associated with a program
@@ -198,6 +203,7 @@ contract Minifu {
         for (uint256 i = 0; i < program.tasksCount; i++) {
             Task storage task = program.tasks[i];
             taskList[i] = TaskInfo({
+                name: task.name,
                 url: task.url,
                 points: task.points,
                 totalCustomers: task.totalCustomers

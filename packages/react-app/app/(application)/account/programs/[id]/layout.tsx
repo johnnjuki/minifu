@@ -1,20 +1,20 @@
 "use client";
 
-import { useAccount, useReadContract } from "wagmi";
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAccount, useReadContract } from "wagmi";
 
 import { minifuAbi } from "@/blockchain/abi/minifu-abi";
-import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Nav } from "@/components/(application)/account/programs/[id]/layout/nav";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
 
-export type MyProgramLayoutProps = {
+export type ProgramLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function MyProgramLayout({ children }: MyProgramLayoutProps) {
+export default function ProgramLayout({ children }: ProgramLayoutProps) {
   const { address, isConnected } = useAccount();
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export default function MyProgramLayout({ children }: MyProgramLayoutProps) {
     isPending,
     error,
   } = useReadContract({
-    address: "0x14C08F73c800D278321813F1AA56Fa2F2aeF700F",
+    address: "0x58467a99f2e6487764a290996cf938c4F47C34FA",
     abi: minifuAbi,
     functionName: "getProgram",
     args: [address!!, BigInt(0)],

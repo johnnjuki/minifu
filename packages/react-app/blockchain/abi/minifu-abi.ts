@@ -54,6 +54,12 @@ export const minifuAbi = [
       {
         "indexed": false,
         "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
         "name": "url",
         "type": "string"
       },
@@ -98,6 +104,11 @@ export const minifuAbi = [
         "internalType": "uint256",
         "name": "_programId",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
       },
       {
         "internalType": "string",
@@ -322,6 +333,11 @@ export const minifuAbi = [
     "outputs": [
       {
         "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
         "name": "url",
         "type": "string"
       },
@@ -356,6 +372,11 @@ export const minifuAbi = [
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
           {
             "internalType": "string",
             "name": "url",
