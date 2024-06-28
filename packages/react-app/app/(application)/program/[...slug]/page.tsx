@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -29,8 +29,8 @@ export default function ProgramPage({
     isPending,
     error,
   } = useReadContract({
-    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-    abi: minifuAbi,
+    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    abi: tuzoAbi,
     functionName: "getProgram",
     args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(params.slug[1]!!)],
   });
@@ -40,17 +40,17 @@ export default function ProgramPage({
     isPending: waysToEarnPending,
     error: waysToEarnError,
   } = useReadContract({
-    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-    abi: minifuAbi,
+    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    abi: tuzoAbi,
     functionName: "getTasks",
-    args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(0)],
+    args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(params.slug[1]!!)],
   });
 
   async function completeTask(taskId: number) {
     if (!address) return;
     const hash = await writeContractAsync({
-      address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-      abi: minifuAbi,
+      address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+      abi: tuzoAbi,
       functionName: "completeTask",
       args: [
         `${params.slug[0]!!}` as `0x${string}`,
@@ -75,7 +75,7 @@ export default function ProgramPage({
   }
 
   return (
-    <main className="p-4">
+    <main className="">
       <Link href="/home">
         <ArrowLeft className="mb-4 h-6 w-6" />
       </Link>
@@ -89,18 +89,18 @@ export default function ProgramPage({
       </div>
 
       {isPending ? (
-        <Skeleton className="h-full w-full rounded-xl" />
+        <Skeleton className="h-[20px] w-[350px] rounded-xl" />
       ) : (
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl font-bold">{program?.[0]}</h1>
-            <p className="text-sm text-muted-foreground">{program?.[1]}</p>
+            <h1 className="text-2xl font-bold">{program?.[1]}</h1>
+            <p className="text-sm text-muted-foreground">{program?.[2]}</p>
           </div>
 
           <div>
             <h1 className="text-lg font-semibold">Ways to earn</h1>
             <p className="text-sm text-muted-foreground">
-              Complete task below to earn
+              Complete tasks below to earn points
             </p>
           </div>
 
@@ -109,20 +109,28 @@ export default function ProgramPage({
           )}
 
           {waysToEarnPending ? (
-            <Skeleton className="h-full w-full rounded-xl" />
+            <Skeleton className="h-[350px] w-[350px] rounded-xl" />
           ) : (
-            <div className="flex flex-col gap-6">
-              {waysToEarn?.map((wayToEarn, index) => (
-                <div className="flex flex-col gap-2" key={index}>
-                  <div className="flex">
-                    <div className="flex-1">
-                      <div className="">{wayToEarn?.name}</div>
-                      <p className="text-sm text-muted-foreground">
-                        {BigInt(wayToEarn?.points).toString()} points
-                      </p>
-                    </div>
+            <>
+              {waysToEarn?.length === 0 && (
+                <div className="">
+                  <p className="text-muted-foreground">
+                    No ways to earn added yet
+                  </p>
+                </div>
+              )}
 
-                    <div className="flex-1">
+              <div className="flex flex-col gap-6">
+                {waysToEarn?.map((wayToEarn, index) => (
+                  <div className="" key={index}>
+                    <div className="flex gap-3">
+                      <div className="flex-1">
+                        <div className="">{wayToEarn?.name}</div>
+                        <p className="text-sm text-muted-foreground">
+                          {BigInt(wayToEarn?.points).toString()} points
+                        </p>
+                      </div>
+
                       <Button
                         disabled={
                           isCompletingTask ||
@@ -130,7 +138,7 @@ export default function ProgramPage({
                         }
                         onClick={() => completeTask(index)}
                         variant="secondary"
-                        className=" "
+                        className="flex-1"
                       >
                         <p>
                           {wayToEarn?.customers.includes(address!!)
@@ -140,9 +148,9 @@ export default function ProgramPage({
                       </Button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       )}

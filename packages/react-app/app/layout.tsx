@@ -11,7 +11,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Minifu",
+  title: "Tuzo",
   description: "Earn points, get discounts, and much more 🎉",
 };
 

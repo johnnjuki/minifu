@@ -1,19 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useAccount, useReadContract } from "wagmi";
 import { useEffect, useState } from "react";
+import { useAccount, useReadContract } from "wagmi";
 
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
+import { GiftIcon } from "lucide-react";
 
 export default function AccountPage() {
   const { address, isConnected } = useAccount();
@@ -24,8 +19,8 @@ export default function AccountPage() {
     isPending,
     error,
   } = useReadContract({
-    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-    abi: minifuAbi,
+    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    abi: tuzoAbi,
     functionName: "getProgramsByOwner",
     args: [address!!],
   });
@@ -39,10 +34,12 @@ export default function AccountPage() {
   }
 
   return (
-    <main className="flex flex-col gap-4 p-4">
-      <div className="text-3xl font-bold">Account</div>
+    <main className="flex flex-col gap-4">
+      <div className="text-3xl font-bold">My Programs</div>
 
-      <div className="text-lg font-semibold">Your launched programs</div>
+      <p className="text-sm text-muted-foreground">
+        Your launched rewards programs
+      </p>
 
       <div className="text-sm text-muted-foreground">
         {/* // TODO: Remove this */}
@@ -55,31 +52,32 @@ export default function AccountPage() {
 
         {programs?.length === 0 && (
           <div className="flex flex-col space-y-4">
-            <p className="">You have not launched any loyalty program yet</p>
-           <Link href="/account/programs/create"> <Button className="w-fit">Launch Now</Button></Link>
+            <p className="">You have not launched any rewards program yet</p>
+            <Link href="/my-programs/programs/create">
+              {" "}
+              <Button className="w-fit">Launch Now</Button>
+            </Link>
           </div>
         )}
       </div>
 
       {isPending ? (
-        <Skeleton className="h-[250px] w-[250px] rounded-xl" />
+        <Skeleton className="h-[250px] w-[350px] rounded-xl" />
       ) : (
         <div className="grid gap-4">
           {/* // TODO: Create a program type */}
           {programs?.map((program: any, index) => (
-            <Link
-              href={`/account/programs/${index}`}
-              key={index}
-            >
-              <Card className="w-[250px]">
-                <CardHeader>
-                  <CardTitle>{program.name}</CardTitle>
-                  <CardDescription>
+            <Link href={`/my-programs/programs/${program.programId}/points`} key={index}>
+              <Card>
+                <CardContent className="flex flex-col items-center justify-center p-6">
+                  <GiftIcon className="mb-2 h-8 w-8 text-muted-foreground" />
+                  <h3 className="mb-1 text-lg font-bold">{program.name}</h3>
+                  <p className="text-sm text-muted-foreground">
                     {program.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* TODO: show number of people rewarded */}
+                  </p>
+                  <Button variant="outline" className="mt-4">
+                    View
+                  </Button>
                 </CardContent>
               </Card>
             </Link>

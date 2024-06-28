@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-contract Minifu {
+contract Tuzo {
     /*
     Task here, is represented as way to earn on the frontend
     */
@@ -15,8 +15,9 @@ contract Minifu {
         address[] customers;
     }
 
-    // Represents a loyalty program with a name, description, owner, task count, and a mapping of tasks.
+    // Represents a rewards program with a programId, name, description, owner, task count, and a mapping of tasks.
     struct Program {
+        uint256 programId;
         string name;
         string description;
         address owner;
@@ -26,6 +27,7 @@ contract Minifu {
 
     // Struct for returning program details
     struct ProgramInfo {
+        uint256 programId;
         string name;
         string description;
         address owner;
@@ -81,12 +83,14 @@ contract Minifu {
     ) public {
         uint256 programId = programCount[msg.sender];
         Program storage newProgram = programs[msg.sender][programId];
+        newProgram.programId = programId;
         newProgram.name = _name;
         newProgram.description = _description;
         newProgram.owner = msg.sender;
         newProgram.tasksCount = 0;
 
         programCount[msg.sender]++;
+        allPrograms[totalProgramCount].programId = newProgram.programId;
         allPrograms[totalProgramCount].name = newProgram.name;
         allPrograms[totalProgramCount].description = newProgram.description;
         allPrograms[totalProgramCount].owner = newProgram.owner;
@@ -147,6 +151,7 @@ contract Minifu {
         for (uint256 i = 0; i < totalProgramCount; i++) {
             Program storage program = allPrograms[i];
             allProgramList[i] = ProgramInfo({
+                programId: program.programId,
                 name: program.name,
                 description: program.description,
                 owner: program.owner,
@@ -164,6 +169,7 @@ contract Minifu {
         for (uint256 i = 0; i < count; i++) {
             Program storage program = programs[_programOwner][i];
             userProgramList[i] = ProgramInfo({
+                programId: program.programId,
                 name: program.name,
                 description: program.description,
                 owner: program.owner,
@@ -180,13 +186,14 @@ contract Minifu {
         public
         view
         returns (
+            uint256 programId,
             string memory name,
             string memory description,
             uint256 tasksCount
         )
     {
         Program storage program = programs[_programOwner][_programId];
-        return (program.name, program.description, program.tasksCount);
+        return (program.programId, program.name, program.description, program.tasksCount);
     }
 
     function getTask(

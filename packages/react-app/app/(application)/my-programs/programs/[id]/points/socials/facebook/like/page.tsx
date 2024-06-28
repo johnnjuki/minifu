@@ -2,15 +2,18 @@
 
 import { useWriteContract } from "wagmi";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
-import { toast } from "sonner";
-
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
-export default function InstagramFollowPage() {
+export default function FacebookLikePage({
+  params,
+}: {
+  params: { id: number };
+}) {
   const { isPending, error, writeContractAsync } = useWriteContract();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,20 +24,19 @@ export default function InstagramFollowPage() {
     console.log(data);
     try {
       const hash = await writeContractAsync({
-        address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-        abi: minifuAbi,
+        address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+        abi: tuzoAbi,
         functionName: "addTask",
         args: [
-          BigInt(0),
-          "Follow on Instagram",
+          BigInt(params.id),
+          "Like & follow on Facebook",
           data.url as string,
           BigInt(data.points as string),
         ],
       });
       if (hash) {
         console.log(hash);
-        toast.success("Way to earn added");
-        // TODO: Redirect
+        toast.success("Added");
       }
     } catch (error) {
       console.log(e);
@@ -45,11 +47,10 @@ export default function InstagramFollowPage() {
 
   return (
     <main className="p-2">
-      {/* // TODO: Add back button */}
-      <div className="text-xl font-bold">Follow on Instagram</div>
+      <div className="text-xl font-bold">Like & Follow on Facebook</div>
       <p className="text-sm text-muted-foreground">
-        Provide the URL of your Instagram business page where your customers can
-        follow you.
+        Provide the URL of your Facebook business page where your customers can
+        like and follow.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-4 flex flex-col space-y-4">
@@ -59,7 +60,13 @@ export default function InstagramFollowPage() {
           </CardHeader>
           <CardContent>
             <Label htmlFor="url">URL</Label>
-            <Input id="url" name="url" required type="url" />
+            <Input
+              id="url"
+              name="url"
+              required
+              type="url"
+              pattern="^(https?:\/\/)?(facebook\.com)$"
+            />
           </CardContent>
         </Card>
 
@@ -68,17 +75,17 @@ export default function InstagramFollowPage() {
             <CardTitle className="text-lg">Points to earn</CardTitle>
           </CardHeader>
           <CardContent>
-            <Label htmlFor="url">Points</Label>
+            <Label htmlFor="points">Points</Label>
             <Input
               id="points"
               name="points"
               type="number"
               required
               defaultValue={50}
-              pattern="^(https?:\/\/)?(instagram\.com)$"
             />
           </CardContent>
         </Card>
+
         <div className="flex justify-end">
           <Button disabled={isPending} type="submit" className="w-fit">
             {isPending ? "Adding..." : "Add"}

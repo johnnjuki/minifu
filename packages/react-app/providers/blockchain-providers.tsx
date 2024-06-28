@@ -17,7 +17,7 @@ const connectors = connectorsForWallets(
     },
   ],
   {
-    appName: "Minifu",
+    appName: "Tuzo",
     projectId: "7262e0807c288ba105b4a2c68f5d9f31",
   },
 );

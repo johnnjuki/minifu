@@ -1,22 +1,20 @@
 "use client";
 
 import { useWriteContract } from "wagmi";
-import { useRouter } from "next/navigation";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { toast } from "sonner";
 
-export default function XFollowPage() {
-  const router = useRouter();
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function InstagramFollowPage({
+  params,
+}: {
+  params: { id: number };
+}) {
   const { isPending, error, writeContractAsync } = useWriteContract();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -27,12 +25,12 @@ export default function XFollowPage() {
     console.log(data);
     try {
       const hash = await writeContractAsync({
-        address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-        abi: minifuAbi,
+        address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+        abi: tuzoAbi,
         functionName: "addTask",
         args: [
-          BigInt(0),
-          "Follow on X",
+          BigInt(params.id),
+          "Follow on Instagram",
           data.url as string,
           BigInt(data.points as string),
         ],
@@ -40,8 +38,6 @@ export default function XFollowPage() {
       if (hash) {
         console.log(hash);
         toast.success("Way to earn added");
-        // TODO: Redirect
-        // router.push("/account/programs/0/points");
       }
     } catch (error) {
       console.log(e);
@@ -52,10 +48,9 @@ export default function XFollowPage() {
 
   return (
     <main className="p-2">
-      {/* // TODO: Add back button */}
-      <div className="text-xl font-bold">Follow on X</div>
+      <div className="text-xl font-bold">Follow on Instagram</div>
       <p className="text-sm text-muted-foreground">
-        Provide the URL of your X business profile where your customers can
+        Provide the URL of your Instagram business page where your customers can
         follow you.
       </p>
 
@@ -66,13 +61,7 @@ export default function XFollowPage() {
           </CardHeader>
           <CardContent>
             <Label htmlFor="url">URL</Label>
-            <Input
-              id="url"
-              name="url"
-              required
-              type="url"
-              pattern="^(https?:\/\/)?(twitter\.com|x\.com)$"
-            />
+            <Input id="url" name="url" required type="url" />
           </CardContent>
         </Card>
 
@@ -88,10 +77,10 @@ export default function XFollowPage() {
               type="number"
               required
               defaultValue={50}
+              pattern="^(https?:\/\/)?(instagram\.com)$"
             />
           </CardContent>
         </Card>
-
         <div className="flex justify-end">
           <Button disabled={isPending} type="submit" className="w-fit">
             {isPending ? "Adding..." : "Add"}

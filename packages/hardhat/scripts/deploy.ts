@@ -3,9 +3,9 @@ const hre = require('hardhat');
 async function main() {
   await hre.run("compile");
 
-  const minifu = await hre.ethers.deployContract('Minifu');
-  await minifu.waitForDeployment();
-  console.log(`Minifu deployed to ${minifu.target}`);
+  const tuzo = await hre.ethers.deployContract('Tuzo');
+  await tuzo.waitForDeployment();
+  console.log(`Tuzo deployed to ${tuzo.target}`);
 }
 
 main().catch((error) => {

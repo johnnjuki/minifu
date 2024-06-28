@@ -1,4 +1,4 @@
-export const minifuAbi = [
+export const tuzoAbi = [
   {
     "anonymous": false,
     "inputs": [
@@ -143,6 +143,11 @@ export const minifuAbi = [
     "name": "allPrograms",
     "outputs": [
       {
+        "internalType": "uint256",
+        "name": "programId",
+        "type": "uint256"
+      },
+      {
         "internalType": "string",
         "name": "name",
         "type": "string"
@@ -233,6 +238,11 @@ export const minifuAbi = [
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "programId",
+            "type": "uint256"
+          },
+          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -253,7 +263,7 @@ export const minifuAbi = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct Minifu.ProgramInfo[]",
+        "internalType": "struct Tuzo.ProgramInfo[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -276,6 +286,11 @@ export const minifuAbi = [
     ],
     "name": "getProgram",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "programId",
+        "type": "uint256"
+      },
       {
         "internalType": "string",
         "name": "name",
@@ -308,6 +323,11 @@ export const minifuAbi = [
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "programId",
+            "type": "uint256"
+          },
+          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -328,7 +348,7 @@ export const minifuAbi = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct Minifu.ProgramInfo[]",
+        "internalType": "struct Tuzo.ProgramInfo[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -428,7 +448,7 @@ export const minifuAbi = [
             "type": "address[]"
           }
         ],
-        "internalType": "struct Minifu.TaskInfo[]",
+        "internalType": "struct Tuzo.TaskInfo[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -489,6 +509,11 @@ export const minifuAbi = [
     ],
     "name": "programs",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "programId",
+        "type": "uint256"
+      },
       {
         "internalType": "string",
         "name": "name",

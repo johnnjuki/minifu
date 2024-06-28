@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAccount, useReadContract } from "wagmi";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import {
@@ -25,36 +25,41 @@ type Social = {
   href: string;
 };
 
+export default function PointsPage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const { address, isConnected } = useAccount();
+
+
 const socials: Social[] = [
   {
     icon: <Facebook />,
     description: "Like & follow on Facebook",
-    href: "/account/programs/0/points/socials/facebook/like",
+    href: `/my-programs/programs/${params.id}/points/socials/facebook/like`,
   },
   {
     icon: <Twitter />,
     description: "Follow on X",
-    href: "/account/programs/0/points/socials/x/follow",
+    href: `/my-programs/programs/${params.id}/points/socials/x/follow`,
   },
   {
     icon: <Instagram />,
     description: "Follow on Instagram",
-    href: "/account/programs/0/points/socials/instagram/follow",
+    href: `/my-programs/programs/${params.id}/points/socials/instagram/follow`,
   },
 ];
-
-export default function PointsPage() {
-  const { address, isConnected } = useAccount();
 
   const {
     data: waysToEarn,
     isPending,
     error,
   } = useReadContract({
-    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-    abi: minifuAbi,
+    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    abi: tuzoAbi,
     functionName: "getTasks",
-    args: [address!!, BigInt(0)],
+    args: [address!!, BigInt(params.id)],
   });
 
   const [isMounted, setIsMounted] = useState(false);
@@ -70,11 +75,11 @@ export default function PointsPage() {
   return (
     <main className="">
       <p className="mb-4 mt-1 text-sm text-muted-foreground">
-        Create ways to earn when customers engage with your brand.
+        Add ways to earn when customers engage with your brand.
       </p>
 
       {isPending ? (
-        <Skeleton className="h-[250px] w-[250px] rounded-xl" />
+        <Skeleton className="h-[350px] w-[350px] rounded-xl" />
       ) : (
         <>
           <Dialog>

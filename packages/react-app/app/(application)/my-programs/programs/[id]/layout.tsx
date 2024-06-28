@@ -6,15 +6,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount, useReadContract } from "wagmi";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Nav } from "@/components/(application)/account/programs/[id]/layout/nav";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export type ProgramLayoutProps = {
   children: React.ReactNode;
+  params: { id: number };
 };
 
-export default function ProgramLayout({ children }: ProgramLayoutProps) {
+export default function ProgramLayout({
+  children,
+  params,
+}: ProgramLayoutProps) {
   const { address, isConnected } = useAccount();
   const router = useRouter();
 
@@ -23,10 +27,10 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
     isPending,
     error,
   } = useReadContract({
-    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
-    abi: minifuAbi,
+    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    abi: tuzoAbi,
     functionName: "getProgram",
-    args: [address!!, BigInt(0)],
+    args: [address!!, BigInt(params.id)],
   });
 
   const [isMounted, setIsMounted] = useState(false);
@@ -36,11 +40,8 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
   });
 
   return (
-    <main className="p-4">
-
-      <Link href="/account">
-        <ArrowLeft className="mb-4 h-6 w-6" />
-      </Link>
+    <main className="">
+      <ArrowLeft onClick={() => router.back()} className="mb-4 h-6 w-6 hover:cursor-pointer" />
 
       <div className="text-sm text-muted-foreground">
         {/* // TODO: Remove this */}
@@ -53,13 +54,13 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
       </div>
 
       {isPending ? (
-        <Skeleton className="h-full w-full rounded-xl" />
+        <Skeleton className="h-[400px] w-[350px] rounded-xl" />
       ) : (
         <div>
-          <h1 className="text-2xl font-bold">{program?.[0]}</h1>
-          <p className="text-sm text-muted-foreground">{program?.[1]}</p>
+          <h1 className="text-2xl font-bold">{program?.[1]}</h1>
+          <p className="text-sm text-muted-foreground">{program?.[2]}</p>
 
-          <Nav className="mb-4 mt-6" />
+          <Nav id={params.id} />
 
           {children}
         </div>

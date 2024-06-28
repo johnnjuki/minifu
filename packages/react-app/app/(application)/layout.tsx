@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
-import { Gift, Home, User } from "lucide-react";
+import { Gift, Home, Rocket, User } from "lucide-react";
 import Link from "next/link";
 
 const NavItem = ({
@@ -40,11 +40,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 overflow-auto">
         <div className="p-4">{children}</div>
       </main>
-      {/* // TODO: when in selected nav, bold */}
       <nav
         className={cn(
           "flex items-center justify-between bg-white px-4 py-2",
-          pathname?.startsWith("/account/programs/") && "hidden",
+          pathname?.startsWith("/my-programs/programs/") && "hidden",
         )}
       >
         <NavItem pathname={pathname} href="/home" icon={Home} label="Home" />
@@ -56,9 +55,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
         <NavItem
           pathname={pathname}
-          href="/account"
-          icon={User}
-          label="Account"
+          href="/my-programs"
+          icon={Rocket}
+          label="My Programs"
         />
       </nav>
     </div>

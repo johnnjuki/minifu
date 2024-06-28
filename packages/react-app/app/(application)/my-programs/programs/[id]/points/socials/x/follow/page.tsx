@@ -1,15 +1,26 @@
 "use client";
 
 import { useWriteContract } from "wagmi";
+import { useRouter } from "next/navigation";
 
-import { minifuAbi } from "@/blockchain/abi/minifu-abi";
+import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export default function FacebookLikePage() {
+export default function XFollowPage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const router = useRouter();
   const { isPending, error, writeContractAsync } = useWriteContract();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -20,20 +31,19 @@ export default function FacebookLikePage() {
     console.log(data);
     try {
       const hash = await writeContractAsync({
-        address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
-        abi: minifuAbi,
+        address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+        abi: tuzoAbi,
         functionName: "addTask",
         args: [
-          BigInt(0),
-          "Like & follow on Facebook",
+          BigInt(params.id),
+          "Follow on X",
           data.url as string,
           BigInt(data.points as string),
         ],
       });
       if (hash) {
         console.log(hash);
-        toast.success("Added");
-        // TODO: Redirect
+        toast.success("Way to earn added");
       }
     } catch (error) {
       console.log(e);
@@ -44,11 +54,10 @@ export default function FacebookLikePage() {
 
   return (
     <main className="p-2">
-      {/* // TODO: Add back button */}
-      <div className="text-xl font-bold">Like & Follow on Facebook</div>
+      <div className="text-xl font-bold">Follow on X</div>
       <p className="text-sm text-muted-foreground">
-        Provide the URL of your Facebook business page where your customers can
-        like and follow.
+        Provide the URL of your X business profile where your customers can
+        follow you.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-4 flex flex-col space-y-4">
@@ -63,7 +72,7 @@ export default function FacebookLikePage() {
               name="url"
               required
               type="url"
-              pattern="^(https?:\/\/)?(facebook\.com)$"
+              pattern="^(https?:\/\/)?(twitter\.com|x\.com)$"
             />
           </CardContent>
         </Card>
@@ -73,7 +82,7 @@ export default function FacebookLikePage() {
             <CardTitle className="text-lg">Points to earn</CardTitle>
           </CardHeader>
           <CardContent>
-            <Label htmlFor="points">Points</Label>
+            <Label htmlFor="url">Points</Label>
             <Input
               id="points"
               name="points"
@@ -85,7 +94,7 @@ export default function FacebookLikePage() {
         </Card>
 
         <div className="flex justify-end">
-        <Button disabled={isPending} type="submit" className="w-fit">
+          <Button disabled={isPending} type="submit" className="w-fit">
             {isPending ? "Adding..." : "Add"}
           </Button>
         </div>
