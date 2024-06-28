@@ -23,7 +23,7 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
     isPending,
     error,
   } = useReadContract({
-    address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
     abi: minifuAbi,
     functionName: "getProgram",
     args: [address!!, BigInt(0)],

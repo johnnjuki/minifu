@@ -32,7 +32,7 @@ export default function FacebookLikePage() {
       });
       if (hash) {
         console.log(hash);
-        toast.success("Way to earn added");
+        toast.success("Added");
         // TODO: Redirect
       }
     } catch (error) {

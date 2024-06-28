@@ -1,6 +1,7 @@
 "use client";
 
 import { useWriteContract } from "wagmi";
+import { useRouter } from "next/navigation";
 
 import { minifuAbi } from "@/blockchain/abi/minifu-abi";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export default function TwitterFollowPage() {
+export default function XFollowPage() {
+  const router = useRouter();
   const { isPending, error, writeContractAsync } = useWriteContract();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,7 +27,7 @@ export default function TwitterFollowPage() {
     console.log(data);
     try {
       const hash = await writeContractAsync({
-        address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+        address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
         abi: minifuAbi,
         functionName: "addTask",
         args: [
@@ -39,6 +41,7 @@ export default function TwitterFollowPage() {
         console.log(hash);
         toast.success("Way to earn added");
         // TODO: Redirect
+        // router.push("/account/programs/0/points");
       }
     } catch (error) {
       console.log(e);

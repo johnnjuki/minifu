@@ -2,19 +2,20 @@
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useReadContract, useAccount, useWriteContract } from "wagmi";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 import { minifuAbi } from "@/blockchain/abi/minifu-abi";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { HexToNumberErrorType } from "viem";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProgramPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
+  const router = useRouter();
   const { address, isConnected } = useAccount();
 
   const {
@@ -28,7 +29,7 @@ export default function ProgramPage({
     isPending,
     error,
   } = useReadContract({
-    address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
     abi: minifuAbi,
     functionName: "getProgram",
     args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(params.slug[1]!!)],
@@ -39,7 +40,7 @@ export default function ProgramPage({
     isPending: waysToEarnPending,
     error: waysToEarnError,
   } = useReadContract({
-    address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+    address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
     abi: minifuAbi,
     functionName: "getTasks",
     args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(0)],
@@ -47,8 +48,8 @@ export default function ProgramPage({
 
   async function completeTask(taskId: number) {
     if (!address) return;
-    await writeContractAsync({
-      address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+    const hash = await writeContractAsync({
+      address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
       abi: minifuAbi,
       functionName: "completeTask",
       args: [
@@ -57,6 +58,10 @@ export default function ProgramPage({
         BigInt(taskId),
       ],
     });
+
+    if (hash) {
+      router.push("/my-rewards");
+    }
   }
 
   const [isMounted, setIsMounted] = useState(false);
@@ -119,20 +124,19 @@ export default function ProgramPage({
 
                     <div className="flex-1">
                       <Button
-                        disabled={isCompletingTask || wayToEarn?.customers.includes(address!!)}
+                        disabled={
+                          isCompletingTask ||
+                          wayToEarn?.customers.includes(address!!)
+                        }
                         onClick={() => completeTask(index)}
                         variant="secondary"
                         className=" "
                       >
-                        {isCompletingTask ? (
-                          <p>Rewarding...</p>
-                        ) : (
-                          <p>
-                            {wayToEarn?.customers.includes(address!!)
-                              ? "rewarded"
-                              : wayToEarn?.name.split(" ")[0]}
-                          </p>
-                        )}
+                        <p>
+                          {wayToEarn?.customers.includes(address!!)
+                            ? "rewarded"
+                            : wayToEarn?.name.split(" ")[0]}
+                        </p>
                       </Button>
                     </div>
                   </div>

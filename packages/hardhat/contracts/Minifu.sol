@@ -50,6 +50,9 @@ contract Minifu {
     uint256 public totalProgramCount;
     mapping(uint256 => Program) public allPrograms;
 
+    // Stores the total points earned by each customer
+    mapping(address => uint256) public customerPoints;
+
     event ProgramCreated(
         address indexed owner,
         uint256 programId,
@@ -67,7 +70,8 @@ contract Minifu {
     event TaskCompleted(
         address indexed user,
         uint256 programId,
-        uint256 taskId
+        uint256 taskId,
+        uint256 points
     );
 
     // Allows a user to set up a new program with a name and description
@@ -131,7 +135,9 @@ contract Minifu {
         task.totalCustomers++;
         task.customers.push(msg.sender);
 
-        emit TaskCompleted(msg.sender, _programId, _taskId);
+        customerPoints[msg.sender] += task.points;
+
+        emit TaskCompleted(msg.sender, _programId, _taskId, task.points);
     }
 
     function getAllPrograms() public view returns (ProgramInfo[] memory) {
@@ -215,5 +221,10 @@ contract Minifu {
             });
         }
         return taskList;
+    }
+
+    // Returns the total points a customer has earned
+    function getTotalPoints(address _customer) public view returns (uint256) {
+        return customerPoints[_customer];
     }
 }

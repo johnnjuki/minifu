@@ -25,7 +25,7 @@ export default function CreateProgramPage() {
     console.log(data); // TODO: Delete this
     try {
         const hash = await writeContractAsync({
-            address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
+            address: "0x2211d2aB752c6c1b73661F540Df381B5b052F284",
             abi: minifuAbi,
             functionName: "createProgram",
             args: [ data.name as string, data.description as string],
@@ -46,9 +46,9 @@ export default function CreateProgramPage() {
 
     <main className="flex flex-col gap-3 p-4">
       <div className="">
-        <div className="text-xl font-bold">Launch your program</div>
+        <div className="text-xl font-bold">Launch your loyalty program</div>
         <p className=" mt-1 text-sm text-muted-foreground">
-          Create a new program
+          Create a new loyalty program
         </p>
       </div>
 
