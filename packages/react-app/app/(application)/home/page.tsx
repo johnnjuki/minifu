@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useReadContract, useAccount } from "wagmi";
+import { useEffect, useState } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -11,16 +12,27 @@ import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 
 export default function HomePage() {
   const { address, isConnected } = useAccount();
+  const [isMounted, setIsMounted] = useState(false);
 
   const {
     data: programs,
     isPending,
     error,
   } = useReadContract({
-    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
     abi: tuzoAbi,
     functionName: "getAllPrograms",
   });
+
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
 
   return (
     <main className="flex flex-col gap-6">

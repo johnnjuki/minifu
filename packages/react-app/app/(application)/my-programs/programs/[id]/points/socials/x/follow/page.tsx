@@ -31,7 +31,7 @@ export default function XFollowPage({
     console.log(data);
     try {
       const hash = await writeContractAsync({
-        address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+        address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
         abi: tuzoAbi,
         functionName: "addTask",
         args: [

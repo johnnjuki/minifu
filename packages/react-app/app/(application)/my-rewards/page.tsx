@@ -7,6 +7,7 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { useReadContract, useAccount } from "wagmi";
+import { useEffect, useState } from "react";
 
 import { tuzoAbi } from "@/blockchain/abi/tuzo-abi";
 import { Button } from "@/components/ui/button";
@@ -41,17 +42,27 @@ const rewards = [
 
 export default function MyRewardsPage() {
   const { address, isConnected } = useAccount();
+  const [isMounted, setIsMounted] = useState(false);
 
   const {
     data: points,
     isPending,
     error,
   } = useReadContract({
-    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
     abi: tuzoAbi,
     functionName: "getTotalPoints",
     args: [address!!],
   });
+
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <main className="flex flex-col gap-4">

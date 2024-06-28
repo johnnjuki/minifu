@@ -29,7 +29,7 @@ export default function ProgramPage({
     isPending,
     error,
   } = useReadContract({
-    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
     abi: tuzoAbi,
     functionName: "getProgram",
     args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(params.slug[1]!!)],
@@ -40,7 +40,7 @@ export default function ProgramPage({
     isPending: waysToEarnPending,
     error: waysToEarnError,
   } = useReadContract({
-    address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+    address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
     abi: tuzoAbi,
     functionName: "getTasks",
     args: [`${params.slug[0]!!}` as `0x${string}`, BigInt(params.slug[1]!!)],
@@ -49,7 +49,7 @@ export default function ProgramPage({
   async function completeTask(taskId: number) {
     if (!address) return;
     const hash = await writeContractAsync({
-      address: "0x2BAeeBf78342c84de0833b605beaFC94A1DC4b99",
+      address: "0x9EFF7B69248A16169844ed995C18F14eC1e733F0",
       abi: tuzoAbi,
       functionName: "completeTask",
       args: [

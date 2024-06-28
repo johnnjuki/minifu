@@ -1,13 +1,7 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+// TODO: Build an onboarding flow
 
 export default function OnboardingPage() {
-    return (
-        <main className="flex flex-col items-center justify-center h-screen gap-3">
-            
-            <h1>Onboarding</h1>
-            <Link href="/home"><Button>Get Started</Button></Link>
-        </main>
-    )
+  redirect("/home");
 }
