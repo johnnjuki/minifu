@@ -6,12 +6,13 @@ contract Minifu {
     Task here, is represented as way to earn on the frontend
     */
 
-    // Represents a social media task with a name, URL, points, and total customers who have completed it.
+    // Represents a social media task with a name, URL, points, total customers who have completed it, and an array of customer addresses.
     struct Task {
         string name;
         string url;
         uint256 points;
         uint256 totalCustomers;
+        address[] customers;
     }
 
     // Represents a loyalty program with a name, description, owner, task count, and a mapping of tasks.
@@ -37,6 +38,7 @@ contract Minifu {
         string url;
         uint256 points;
         uint256 totalCustomers;
+        address[] customers;
     }
 
     // Tracks the number of programs created by each user
@@ -107,7 +109,8 @@ contract Minifu {
             name: _name,
             url: _url,
             points: _points,
-            totalCustomers: 0
+            totalCustomers: 0,
+            customers: new address[](0)
         });
 
         program.tasksCount++;
@@ -126,6 +129,7 @@ contract Minifu {
 
         Task storage task = program.tasks[_taskId];
         task.totalCustomers++;
+        task.customers.push(msg.sender);
 
         emit TaskCompleted(msg.sender, _programId, _taskId);
     }
@@ -186,11 +190,11 @@ contract Minifu {
     )
         public
         view
-        returns (string memory name, string memory url, uint256 points, uint256 totalCustomers)
+        returns (string memory name, string memory url, uint256 points, uint256 totalCustomers, address[] memory customers)
     {
         Program storage program = programs[_programOwner][_programId];
         Task storage task = program.tasks[_taskId];
-        return (task.name, task.url, task.points, task.totalCustomers);
+        return (task.name, task.url, task.points, task.totalCustomers, task.customers);
     }
 
     // Returns the tasks associated with a program
@@ -206,7 +210,8 @@ contract Minifu {
                 name: task.name,
                 url: task.url,
                 points: task.points,
-                totalCustomers: task.totalCustomers
+                totalCustomers: task.totalCustomers,
+                customers: task.customers
             });
         }
         return taskList;

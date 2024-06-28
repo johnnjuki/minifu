@@ -2,13 +2,13 @@
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount, useReadContract } from "wagmi";
 
 import { minifuAbi } from "@/blockchain/abi/minifu-abi";
 import { Nav } from "@/components/(application)/account/programs/[id]/layout/nav";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
 
 export type ProgramLayoutProps = {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
     isPending,
     error,
   } = useReadContract({
-    address: "0x58467a99f2e6487764a290996cf938c4F47C34FA",
+    address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
     abi: minifuAbi,
     functionName: "getProgram",
     args: [address!!, BigInt(0)],
@@ -37,7 +37,6 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
 
   return (
     <main className="p-4">
-      {/* TODO: Add back button */}
 
       <Link href="/account">
         <ArrowLeft className="mb-4 h-6 w-6" />
@@ -47,10 +46,10 @@ export default function ProgramLayout({ children }: ProgramLayoutProps) {
         {/* // TODO: Remove this */}
 
         {!isConnected && (
-          <p className="">Connect your wallet to see your programs</p>
+          <p className="">Connect your wallet to see your program</p>
         )}
 
-        {error && <p>Error fetching programs, try again later</p>}
+        {error && <p>Error fetching program, try again later</p>}
       </div>
 
       {isPending ? (

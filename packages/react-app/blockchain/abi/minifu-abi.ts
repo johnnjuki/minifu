@@ -350,6 +350,11 @@ export const minifuAbi = [
         "internalType": "uint256",
         "name": "totalCustomers",
         "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "customers",
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -391,6 +396,11 @@ export const minifuAbi = [
             "internalType": "uint256",
             "name": "totalCustomers",
             "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "customers",
+            "type": "address[]"
           }
         ],
         "internalType": "struct Minifu.TaskInfo[]",

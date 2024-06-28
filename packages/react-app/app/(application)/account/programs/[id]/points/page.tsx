@@ -51,7 +51,7 @@ export default function PointsPage() {
     isPending,
     error,
   } = useReadContract({
-    address: "0x58467a99f2e6487764a290996cf938c4F47C34FA",
+    address: "0x54C2D4340CBfF5FdFc5276e6fe6071f97E00B433",
     abi: minifuAbi,
     functionName: "getTasks",
     args: [address!!, BigInt(0)],
@@ -72,8 +72,6 @@ export default function PointsPage() {
       <p className="mb-4 mt-1 text-sm text-muted-foreground">
         Create ways to earn when customers engage with your brand.
       </p>
-
-      {waysToEarn && <></>}
 
       {isPending ? (
         <Skeleton className="h-[250px] w-[250px] rounded-xl" />
