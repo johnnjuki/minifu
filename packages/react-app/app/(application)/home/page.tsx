@@ -82,8 +82,8 @@ export default function HomePage() {
                   <Card key={index}>
                     <CardContent className="flex flex-col items-center justify-center p-6">
                       <GiftIcon className="mb-2 h-8 w-8 text-muted-foreground" />
-                      <h3 className="mb-1 text-lg font-bold">{program.name}</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="mb-1 text-lg font-bold text-center">{program.name}</h3>
+                      <p className="text-sm text-muted-foreground text-center">
                         {program.description}
                       </p>
                       <Link
