@@ -62,7 +62,7 @@ export default function AccountPage() {
       </div>
 
       {isPending ? (
-        <Skeleton className="h-[250px] w-[350px] rounded-xl" />
+        <Skeleton className="h-[250px] w-full rounded-xl" />
       ) : (
         <div className="grid gap-4">
           {/* // TODO: Create a program type */}

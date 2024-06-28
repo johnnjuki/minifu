@@ -86,7 +86,7 @@ export default function MyRewardsPage() {
       )}
 
       {isPending ? (
-        <Skeleton className="h-[350px] w-[350px] rounded-xl" />
+        <Skeleton className="h-[350px] w-full rounded-xl" />
       ) : (
         <div className="flex flex-col gap-3">
           <div>

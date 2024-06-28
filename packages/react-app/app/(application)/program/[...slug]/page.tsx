@@ -89,7 +89,7 @@ export default function ProgramPage({
       </div>
 
       {isPending ? (
-        <Skeleton className="h-[20px] w-[350px] rounded-xl" />
+        <Skeleton className="h-[20px] w-full rounded-xl" />
       ) : (
         <div className="flex flex-col gap-6">
           <div>
@@ -109,7 +109,7 @@ export default function ProgramPage({
           )}
 
           {waysToEarnPending ? (
-            <Skeleton className="h-[350px] w-[350px] rounded-xl" />
+            <Skeleton className="h-[350px] w-full rounded-xl" />
           ) : (
             <>
               {waysToEarn?.length === 0 && (

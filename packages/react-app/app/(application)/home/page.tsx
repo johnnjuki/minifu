@@ -66,7 +66,7 @@ export default function HomePage() {
           )}
 
           {isPending ? (
-            <Skeleton className="h-[350px] w-[350px] rounded-xl" />
+            <Skeleton className="h-[350px] w-full rounded-xl" />
           ) : (
             <>
               {programs?.length === 0 && (

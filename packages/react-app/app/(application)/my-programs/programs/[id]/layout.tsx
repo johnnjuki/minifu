@@ -54,7 +54,7 @@ export default function ProgramLayout({
       </div>
 
       {isPending ? (
-        <Skeleton className="h-[400px] w-[350px] rounded-xl" />
+        <Skeleton className="h-[400px] w-full rounded-xl" />
       ) : (
         <div>
           <h1 className="text-2xl font-bold">{program?.[1]}</h1>

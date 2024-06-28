@@ -79,7 +79,7 @@ const socials: Social[] = [
       </p>
 
       {isPending ? (
-        <Skeleton className="h-[350px] w-[350px] rounded-xl" />
+        <Skeleton className="h-[350px] w-full rounded-xl" />
       ) : (
         <>
           <Dialog>
