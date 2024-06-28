@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} mx-auto max-w-screen-sm`}>
+      <body className={`${inter.className} mx-auto max-w-sm`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
